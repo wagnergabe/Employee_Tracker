@@ -28,6 +28,13 @@
 //Update an employee role
     //Prompted to select an employee to update and their new role and this information is updated in the database. 
 
+//BONUS
+    //Update Employee managers
+    //View employees by manager
+    //view employees by department
+    //Delete departments, roles, and employees.
+    //View the total utilized budget of a department (Combined salaries of all employees in that department);
+
 const inquirer = require('inquirer');
 
 function menu() {
