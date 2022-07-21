@@ -64,7 +64,8 @@ function menu() {
                 "Add a Department",
                 "Add a Role",
                 "Add an Employee",
-                "Update an Employee Role"
+                "Update an Employee Role",
+                "Delete a Department"
             ]
         }) .then(function (answers) {
             switch (answers.menu_select) {
@@ -89,6 +90,9 @@ function menu() {
                 case "Update an Employee Role":
                     updateEmployeeRole();
                     break;
+                case "Delete a Department":
+                    deleteDepartment();
+                    break;
         }
     });
 };
@@ -111,12 +115,16 @@ function addDepartment() {
         },
     ) 
     .then(res => {
-        db.query("INSERT INTO department SET ?", { NAME: res.department_name}, (err, res) => {
+        db.query("INSERT INTO department SET ?", { name: res.department_name}, (err, res) => {
         if (err) throw err;
-        console.log(`${res.department_name} successfully added to departments!`)
+        console.log(`successfully added to departments!`)
         menu();
         });
       });
-    }
+}
+
+function deleteDepartment() {
+    console.log
+}
 
 
