@@ -70,7 +70,7 @@ function menu() {
                 "Add a Role",
                 "Add an Employee",
                 "Update an Employee Role",
-                "Delete a Department"
+                "Delete Options"
             ]
         }) .then(function (answers) {
             switch (answers.menu_select) {
@@ -95,8 +95,8 @@ function menu() {
                 case "Update an Employee Role":
                     updateEmployeeRole();
                     break;
-                case "Delete a Department":
-                    deleteDepartment();
+                case "Delete Options":
+                    deleteOptions();
                     break;
         }
     });
@@ -229,8 +229,35 @@ function updateEmployeeRole() {
     })
 };
 
-function deleteDepartment() {
-    console.log
+function deleteOptions() {
+    inquirer.prompt([
+        {
+            type: 'list',
+            message: 'Please choose a catagory in which you would like to delete',
+            choices: ['department', 'roles', 'employee'],
+            name: "delete_choice"
+        },
+    ]). then (res => {
+            if (res.delete_choice === 'employee') {
+        db.query("SELECT * FROM employee", (err, res) => {
+            console.table(res);
+        }
+        )}
+    })
 }
+    
+    //     {
+    //         type: 'number',
+    //         message: 'Please input ID number you wish to delete.',
+    //         name: "id_choice"
+    //         }
+    // ]). then (res => {
+    //     db.query('DELETE FROM ? Where id = ?', [res.delete_choice, res.id_choice], (err, res) => {
+    //         if (err) throw err;
+    //         console.log('Deletion complete')
+    //         menu()
+    //     })
+    // })
+
 
 
