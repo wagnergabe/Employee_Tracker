@@ -11,6 +11,8 @@
 //View Departments:
     //formated table showing department names and deparment ids
 
+//----COMPLETE---//
+
 //View all Roles
     //Presented with job title, role id, the department that role belongs to, and the ssalary for that role
 
@@ -19,6 +21,7 @@
 
 //Add a department
     //Prompted to enter the name of the deparment and that department is added to the database
+//----COMPLETE---/
 
 //Add a Role
     //Prompted to enter the name, salary, and deparment for the role and that role is added to the database
@@ -106,6 +109,15 @@ function viewDepartments() {
     })
 };
 
+function viewEmployees() {
+    console.log("Current Employees");
+    const query = "SELECT * FROM employee;"
+    db.query(query, function (err, res) {
+        console.table(res)
+        menu();
+    })
+}
+
 function addDepartment() {
     inquirer.prompt(
         {
@@ -121,6 +133,38 @@ function addDepartment() {
         menu();
         });
       });
+}
+
+function addEmployee() {
+    inquirer.prompt([
+        {
+        type: "input:",
+        name: "firstName",
+        message: "Please enter employee's first name",
+        },
+        {
+        type: "input:",
+        name: "lastName",
+        message: "Please enter employee's last name",
+        },
+        {
+        type: "number",
+        name: "roleid",
+        message: "What is the employee's ID?"
+        },
+        {
+        type: "number",
+        name: "managerid",
+        message: "what is the ID of the employee's manager?"
+        }
+    ])
+    .then(res => {
+        db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?,?,?,?)', [res.firstName, res.lastName, res.roleid, res.managerid], (err, res) => {
+        if (err) throw err;
+        console.log("Employee added")
+        menu();
+        });
+    });
 }
 
 function deleteDepartment() {
