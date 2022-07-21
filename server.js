@@ -250,23 +250,50 @@ function deleteOptions() {
             ]).then (res => {  
             db.query('DELETE FROM employee Where id = ?', res.id_choice, (err, res) => {
                 if (err) throw err;
-                console.log('Deletion complete')
+                console.log('Employee Deleted')
                 menu()
             })
-            })
-        }
-            
+        })
+    }
             )} if (res.delete_choice === 'Roles') {
             db.query("SELECT * FROM role", (err, res) => {
             console.table(res);
-            }
+            inquirer.prompt([ 
+                {
+                type: 'number',
+                message: 'Please input ID number you wish to delete.',
+                name: "id_choice"
+                }
+                ]).then (res => {  
+                    db.query('DELETE FROM role Where id = ?', res.id_choice, (err, res) => {
+                    if (err) throw err;
+                    console.log('Roll Deleted')
+                    menu()
+                })
+            })
+        }
             )} if (res.delete_choice === 'Department') {
             db.query("SELECT * FROM department", (err, res) => {
-            console.table(res);
+                console.table(res);
+                inquirer.prompt([ 
+                    {
+                    type: 'number',
+                    message: 'Please input ID number you wish to delete.',
+                    name: "id_choice"
+                    }
+                ]).then (res => {  
+                db.query('DELETE FROM department Where id = ?', res.id_choice, (err, res) => {
+                    if (err) throw err;
+                    console.log('Department deleted')
+                    menu()
+                })
+                })
             }
-            )}
-    })
+            )}        
 }
+    )}
+    
+
    
 
 
