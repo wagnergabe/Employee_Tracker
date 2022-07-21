@@ -55,7 +55,7 @@ db.connect(function (err) {
 function menu() {
     inquirer.prompt({
             type: "list",
-            name: "menu",
+            name: "menu_select",
             message: "Please select an option",
             choices: [
                 "View Departments",
@@ -67,7 +67,7 @@ function menu() {
                 "Update an Employee Role"
             ]
         }) .then(function (answers) {
-            switch (answers.menu) {
+            switch (answers.menu_select) {
                 case "View Departments":
                     viewDepartments();
                     break;
@@ -77,7 +77,7 @@ function menu() {
                 case "View All Employees":
                     viewEmployees();
                     break;
-                case "Add a department":
+                case "Add a Department":
                     addDepartment();
                     break;
                 case "Add a Role":
@@ -103,17 +103,17 @@ function viewDepartments() {
 };
 
 function addDepartment() {
-    inquirer.prompt([
+    inquirer.prompt(
         {
         type: "input",
         name: "department_name",
         message: "What is the name of the department?"
         },
-    ]) 
+    ) 
     .then(res => {
         db.query("INSERT INTO department SET ?", { NAME: res.department_name}, (err, res) => {
         if (err) throw err;
-        console.log(`${department} successfully added to departments!`)
+        console.log(`${res.department_name} successfully added to departments!`)
         menu();
         });
       });
