@@ -6,6 +6,7 @@
     //add a role
     //add an employee
     //update an employee role
+//----COMPLETE---//
 
 //View Departments:
     //formated table showing department names and deparment ids
@@ -51,7 +52,36 @@ function menu() {
                 "Add an Employee",
                 "Update an Employee Role"
             ]
-        })
+        }) .then(function (answers) {
+            switch (answers.menu) {
+                case "View Departments":
+                    viewDepartments();
+                    break;
+                case "View All Roles":
+                    viewRoles();
+                    break;
+                case "View All Employees":
+                    viewEmployees();
+                    break;
+                case "Add a department":
+                    addDepartment();
+                    break;
+                case "Add a Role":
+                    addRole();
+                    break;
+                case "Add an Employee":
+                    addEmployee();
+                    break;
+                case "Update an Employee Role":
+                    updateEmployeeRole();
+                    break;
+        }
+    });
 };
+
+function viewDepartments() {
+    console.log("This should be showing departments")
+}
+
 
 menu()
