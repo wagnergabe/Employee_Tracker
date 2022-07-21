@@ -37,6 +37,20 @@
     //View the total utilized budget of a department (Combined salaries of all employees in that department);
 
 const inquirer = require('inquirer');
+const mysql = require ('mysql2');
+
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "test",
+    database: "employees_db"
+});
+
+db.connect(function (err) {
+    if (err) throw err;
+    console.log(`Connected to Database`)
+    menu();
+})
 
 function menu() {
     inquirer.prompt({
@@ -80,8 +94,29 @@ function menu() {
 };
 
 function viewDepartments() {
-    console.log("This should be showing departments")
-}
+    console.log("Directory of Departments");
+    const query = "SELECT * FROM department"
+    db.query(query, function (err, res) {
+        console.table(res);
+        menu();
+    })
+};
+
+function addDepartment() {
+    inquirer.prompt([
+        {
+        type: "input",
+        name: "department_name",
+        message: "What is the name of the department?"
+        },
+    ]) 
+    .then(res => {
+        db.query("INSERT INTO department SET ?", { NAME: res.department_name}, (err, res) => {
+        if (err) throw err;
+        console.log(`${department} successfully added to departments!`)
+        menu();
+        });
+      });
+    }
 
 
-menu()
