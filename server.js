@@ -234,17 +234,27 @@ function deleteOptions() {
         {
             type: 'list',
             message: 'Please choose a catagory in which you would like to delete',
-            choices: ['department', 'roles', 'employee'],
+            choices: ['Department', 'Roles', 'Employee'],
             name: "delete_choice"
         },
     ]). then (res => {
-            if (res.delete_choice === 'employee') {
-        db.query("SELECT * FROM employee", (err, res) => {
+            if (res.delete_choice === 'Employee') {
+            db.query("SELECT * FROM employee", (err, res) => {
             console.table(res);
-        }
-        )}
-    })
-}
+            }
+            )} if (res.delete_choice === 'Roles') {
+            db.query("SELECT * FROM role", (err, res) => {
+            console.table(res);
+            }
+            )} if (res.delete_choice === 'Department') {
+            db.query("SELECT * FROM department", (err, res) => {
+            console.table(res);
+            }
+            )}
+        })
+    }
+    
+
     
     //     {
     //         type: 'number',
