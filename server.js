@@ -27,9 +27,11 @@
 //Add a Role
     //Prompted to enter the name, salary, and deparment for the role and that role is added to the database
 //----COMPLETE---/
+
 //Add an employee
     //Prompted to enter the employee's first name, last name, role, and manager, and that employee is added to the database
 //---COMPLETE---/
+
 //Update an employee role
     //Prompted to select an employee to update and their new role and this information is updated in the database. 
 //---COMPLETE---/
@@ -39,6 +41,7 @@
     //View employees by manager
     //view employees by department
     //Delete departments, roles, and employees.
+//---COMPLETE---/
     //View the total utilized budget of a department (Combined salaries of all employees in that department);
 
 const inquirer = require('inquirer');
@@ -70,6 +73,7 @@ function menu() {
                 "Add a Role",
                 "Add an Employee",
                 "Update an Employee Role",
+                "Update Manager of Employee",
                 "Delete Options"
             ]
         }) .then(function (answers) {
@@ -98,6 +102,9 @@ function menu() {
                 case "Delete Options":
                     deleteOptions();
                     break;
+                case "Update Manager of Employee":
+                    updateManager();
+                    break;
         }
     });
 };
@@ -113,7 +120,7 @@ function viewDepartments() {
 
 function viewEmployees() {
     console.log("Current Employees");
-    const query = "SELECT * FROM employee;"
+    query = "SELECT * FROM employee;"
     db.query(query, function (err, res) {
         console.table(res)
         menu();
@@ -229,6 +236,30 @@ function updateEmployeeRole() {
     })
 };
 
+function updateManager() {
+    db.query('SELECT * FROM employee', (err, res) => {
+        console.log(res);
+    })
+    inquirer.prompt([
+        {
+            type: "number",
+            message: "Please select and employee number to update their manager",
+            name: "employeeId"
+        },
+        {
+            type: "number",
+            message: "Please type new manager ID number",
+            name: "managerId"
+        }
+    ]).then(res => {
+        db.query("UPDATE employee SET manager_id = ? WHERE id = ?", [res.managerId, res.employeeId], (err, res) => {
+            if (err) throw err;
+            console.log("\n Manger for selected Employee has been updated \n");
+            menu();
+        })
+    })
+}
+
 function deleteOptions() {
     inquirer.prompt([
         {
@@ -267,7 +298,7 @@ function deleteOptions() {
                 ]).then (res => {  
                     db.query('DELETE FROM role Where id = ?', res.id_choice, (err, res) => {
                     if (err) throw err;
-                    console.log('Roll Deleted')
+                    console.log('Role Deleted')
                     menu()
                 })
             })
