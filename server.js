@@ -38,6 +38,7 @@
 
 //BONUS
     //Update Employee managers
+//---COMPLETE---/
     //View employees by manager
     //view employees by department
     //Delete departments, roles, and employees.
@@ -66,44 +67,52 @@ function menu() {
             name: "menu_select",
             message: "Please select an option",
             choices: [
-                "View Departments",
-                "View All Roles",
-                "View All Employees",
-                "Add a Department",
-                "Add a Role",
-                "Add an Employee",
-                "Update an Employee Role",
-                "Update Manager of Employee",
-                "Delete Options"
+                "VIEW Departments",
+                "VIEW all Roles",
+                "VIEW all Employees",
+                "VIEW employees by Manager",
+                // "VIEW Employees by Department",
+                "ADD a Department",
+                "ADD a Role",
+                "ADD an Employee",
+                "UPDATE an Employee Role",
+                // "UPDATE Manager of Employee",
+                "DELETE Options"
             ]
         }) .then(function (answers) {
             switch (answers.menu_select) {
-                case "View Departments":
+                case "VIEW Departments":
                     viewDepartments();
                     break;
-                case "View All Roles":
+                case "VIEW all Roles":
                     viewRoles();
                     break;
-                case "View All Employees":
+                case "VIEW all Employees":
                     viewEmployees();
                     break;
-                case "Add a Department":
+                case "ADD a Department":
                     addDepartment();
                     break;
-                case "Add a Role":
+                case "ADD a Role":
                     addRole();
                     break;
-                case "Add an Employee":
+                case "ADD an Employee":
                     addEmployee();
                     break;
-                case "Update an Employee Role":
+                case "UPTATE an Employee Role":
                     updateEmployeeRole();
                     break;
-                case "Delete Options":
+                case "DELETE Options":
                     deleteOptions();
                     break;
-                case "Update Manager of Employee":
+                case "UPDATE Manager of Employee":
                     updateManager();
+                    break;
+                case "VIEW employees by Manager":
+                    employeesManagers();
+                    break;
+                case "VIEW Employees by Department":
+                    employeesByDepartment();
                     break;
         }
     });
@@ -130,10 +139,23 @@ function viewEmployees() {
 function viewRoles() {
     console.log("List of Employee roles");
     db.query('SELECT * FROM role', (err, res) => {
-        console.log(res);
+        console.table(res);
         menu();
     })
 }
+
+function employeesManagers() {
+    db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title", (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        menu();
+    })
+};
+
+// function employeesByDepartment() {
+//     db.query("SELECT department.id, employee.id, ")
+// }
+
 
 
 function addDepartment() {
@@ -318,11 +340,11 @@ function deleteOptions() {
                     console.log('Department deleted')
                     menu()
                 })
-                })
-            }
-            )}        
+            })
+        }
+    )}        
+})
 }
-    )}
     
 
    
