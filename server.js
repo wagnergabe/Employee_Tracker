@@ -279,12 +279,12 @@ function updateEmployeeRole() {
 
 function updateManager() {
     db.query('SELECT * FROM employee', (err, res) => {
-        console.log(res);
+        console.table(res);
     })
     inquirer.prompt([
         {
             type: "number",
-            message: "Please select and employee number to update their manager",
+            message: "Please select any employee number to update their manager",
             name: "employeeId"
         },
         {
