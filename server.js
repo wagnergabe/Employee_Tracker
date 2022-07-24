@@ -70,13 +70,14 @@ function menu() {
                 "VIEW Departments",
                 "VIEW all Roles",
                 "VIEW all Employees",
-                "VIEW employees by Manager",
+                // "VIEW employees by Manager",
                 // "VIEW Employees by Department",
+                // "VIEW Department budget",
                 "ADD a Department",
                 "ADD a Role",
                 "ADD an Employee",
                 "UPDATE an Employee Role",
-                // "UPDATE Manager of Employee",
+                "UPDATE Manager of Employee",
                 "DELETE Options"
             ]
         }) .then(function (answers) {
@@ -99,7 +100,7 @@ function menu() {
                 case "ADD an Employee":
                     addEmployee();
                     break;
-                case "UPTATE an Employee Role":
+                case "UPDATE an Employee Role":
                     updateEmployeeRole();
                     break;
                 case "DELETE Options":
@@ -108,15 +109,20 @@ function menu() {
                 case "UPDATE Manager of Employee":
                     updateManager();
                     break;
-                case "VIEW employees by Manager":
-                    employeesManagers();
-                    break;
-                case "VIEW Employees by Department":
-                    employeesByDepartment();
-                    break;
+                // case "VIEW employees by Manager":
+                //     employeesManagers();
+                //     break;
+                // case "VIEW Employees by Department":
+                //     employeesByDepartment();
+                //     break;
+                // case "VIEW Department budget":
+                //     viewDepartmentBudget();
+                //     break;
         }
     });
 };
+
+//----------View Options-----------//
 
 function viewDepartments() {
     console.log("Directory of Departments");
@@ -144,19 +150,29 @@ function viewRoles() {
     })
 }
 
-function employeesManagers() {
-    db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title", (err, res) => {
-        if (err) throw err;
-        console.table(res);
-        menu();
-    })
-};
+// function viewDepartmentBudget () {
+//     db.query(`SELECT department_id AS id, department.name AS department, SUM(salary) AS budgetFROM role  
+//                     INNER JOIN department ON role.department_id = department.id GROUP BY role.department_id`), (err, res) => {
+//         if (err) throw err;
+//         console.table(res);
+//         menu()
+//     };
+//   };
+
+// function employeesManagers() {
+//     db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title", (err, res) => {
+//         if (err) throw err;
+//         console.table(res);
+//         menu();
+//     })
+// };
 
 // function employeesByDepartment() {
 //     db.query("SELECT department.id, employee.id, ")
 // }
 
 
+//----------Creation Options-----------//
 
 function addDepartment() {
     inquirer.prompt(
@@ -234,9 +250,12 @@ function addEmployee() {
     });
 }
 
+
+//----------Update Options-----------//
+
 function updateEmployeeRole() {
     db.query('SELECT * FROM employee', (err, res) => {
-    console.log(res);
+    console.table(res);
     })
     inquirer.prompt([
         {   
@@ -281,6 +300,9 @@ function updateManager() {
         })
     })
 }
+
+
+//----------Delete Options-----------//
 
 function deleteOptions() {
     inquirer.prompt([
